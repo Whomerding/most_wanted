@@ -9,8 +9,8 @@
 ////* Mac: Press "CMD"+"K" and then "CMD"+"/"
 ////* PC: Press "CTRL"+"K" and then "CTRL"+"/"
 
-/**
- * This is the main logic function being called in index.html.
+
+/* This is the main logic function being called in index.html.
  * It operates as the entry point for our entire application and allows
  * our user to decide whether to search by name or by traits.
  * @param {Array} people        A collection of person objects.
@@ -191,6 +191,95 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+/** 
+function findPersonFamily (person, arrayParent? = [none found]) {
+    let subArray = person.parents;
+    arrayParent = [];
+    if (subArray.length === 0) {
+        return arrayParent;
+    }
+    for (let i = 0; i < subArray.length; i++) {
+        arrayParent = arrayParent.concat (
+            findPersonFamily (person, subArray [i])
+        );
+    }
+    return arrayParent;
+} 
+*/
+
+// Search by different parameter functions
+
+function searchByTraits (people) {
+    let displayOption = prompt("Would you like to search by 'one' or 'many' traits?")
+    switch(displayOption) {
+        case "one":
+            let userInput = prompt("What trait would you like to search by?\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
+            if (userInput === "gender") {
+                let foundPerson = searchByGender(people)
+                alert(foundPerson);
+                break;
+            }
+        }
+        
+}
 
 
-function findPersonFamily 
+
+function searchByGender (people) {
+    let userInput = prompt ("Please enter 'male' or 'female'.");
+    let foundPerson = people.filter(function(person) {
+        if (person.gender.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+
+function searchByDOB (people) {
+    let userInput = prompt ("Please enter the Date of Birth in month/day/year format.");
+    let foundPerson = people.filter(function(person) {
+        if (person.dob.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+function searchByHeight (people) {
+    let userInput = prompt ("Please enter height in inches.");
+    let foundPerson = people.filter(function(person) {
+        if (person.height.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+
+function searchByWeight (people) {
+    let userInput = prompt ("Please enter weight in pounds.");
+    let foundPerson = people.filter(function(person) {
+        if (person.weight.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+
+function searchByEyeColor (people) {
+    let userInput = prompt ("Please enter eye color.");
+    let foundPerson = people.filter(function(person) {
+        if (person.eyeColor.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+
+function searchByOccupation (people) {
+    let userInput = prompt ("Please enter occupation.");
+    let foundPerson = people.filter(function(person) {
+        if (person.occupation.includes(userInput)) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
