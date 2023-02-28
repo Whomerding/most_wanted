@@ -73,7 +73,7 @@ function mainMenu(person, people) {
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
-            displayPeople(personFamily);
+            alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -327,15 +327,66 @@ function searchByOccupation (people) {
     return foundPerson;
 }
  
-function findPersonFamily (person, arrayParent = ["none found"]) {
+
+
+
+function findPersonFamily (person, people) {
+    let parents = findParents(person, people)
+    let parentDisplay= parents.map((el)=>{
+        return `Parent: ${el.firstName} ${el.lastName}`;
+    });
+    let spouse = findSpouse(person, people)
+    let spouseDisplay= spouse.map((el)=>{
+        return `Spouse: ${el.firstName} ${el.lastName}`;
+    });
+    let siblings = findSiblings(person, people)
+    let siblingDisplay= siblings.map((el)=>{
+        return `Sibling(s): ${el.firstName} ${el.lastName}`;
+    });
+    let familyDisplay = [];
+    familyDisplay = familyDisplay.concat([parentDisplay, spouseDisplay, siblingDisplay]);
+
+    alert(familyDisplay);
+}   
+    
+function findParents (person, people) {
+    let foundPerson = people.filter(function(el) {
+    if (person.parents.includes(el.id)) {
+        return true;
+    }
+});
+return foundPerson;
+}
+
+function findSpouse (person, people) {
+    let foundPerson = people.filter(function(el) {
+    if (person.currentSpouse === (el.id)) {
+        return true;
+    }
+});
+return foundPerson;
+}
+
+function findSiblings (person, people) {
+    let foundPerson = people.filter(function(el) {
+    if (person.parents.includes(el.parents) && person.id != el.id) {
+        return true;
+    }
+});
+return foundPerson;
+}
+
+function findPersonDescendants(person, array = ["none found"]) {
     let subArray = person.parents;
     if (subArray.length === 0) {
-        return arrayParent;
+        return array;
     }
     for (let i = 0; i < subArray.length; i++) {
-        arrayParent = arrayParent.concat (
-            findPersonFamily (person, subArray [i])
+        array = array.concat(
+            findPersonDescendants(subArray[i])
         );
     }
-    return arrayParent;
-} 
+    alert (displayPeople(array));
+
+}
+
