@@ -73,7 +73,7 @@ function mainMenu(person, people) {
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
+            displayPeople(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -191,21 +191,7 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
-/** 
-function findPersonFamily (person, arrayParent? = [none found]) {
-    let subArray = person.parents;
-    arrayParent = [];
-    if (subArray.length === 0) {
-        return arrayParent;
-    }
-    for (let i = 0; i < subArray.length; i++) {
-        arrayParent = arrayParent.concat (
-            findPersonFamily (person, subArray [i])
-        );
-    }
-    return arrayParent;
-} 
-*/
+
 
 // Search by different parameter functions
 
@@ -216,70 +202,140 @@ function searchByTraits (people) {
             let userInput = prompt("What trait would you like to search by?\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
             if (userInput === "gender") {
                 let foundPerson = searchByGender(people)
-                alert(foundPerson);
+                displayPeople (foundPerson);
                 break;
             }
+            if (userInput === "Date of Birth") {
+                let foundPerson = searchByDOB(people)
+                displayPeople(foundPerson);
+                break;
+            }
+            if (userInput === "height") {
+                let foundPerson = searchByHeight(people)
+                displayPeople(foundPerson);
+                break;
+            }
+            if (userInput === "weight") {
+                let foundPerson = searchByWeight(people)
+                displayPeople(foundPerson);
+                break;
+            }
+            if (userInput === "eye color") {
+                let foundPerson = searchByEyeColor(people)
+                displayPeople(foundPerson);
+                break;
+            }
+            if (userInput === "occupation") {
+                let foundPerson = searchByOccupation(people)
+                displayPeople(foundPerson);
+                break;
+            }
+        case "many":
+            let searchRequestMany = prompt ("Please enter up to five search parameters:\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
+           
+            
         }
-        
-}
-
-
-
+    }
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByGender (people) {
     let userInput = prompt ("Please enter 'male' or 'female'.");
     let foundPerson = people.filter(function(person) {
-        if (person.gender.includes(userInput)) {
+        if (person.gender === (userInput)) {
             return true;
         }
     });
     return foundPerson;
 }
-
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByDOB (people) {
     let userInput = prompt ("Please enter the Date of Birth in month/day/year format.");
     let foundPerson = people.filter(function(person) {
-        if (person.dob.includes(userInput)) {
+        if (person.dob === (userInput)) {
             return true;
         }
     });
     return foundPerson;
 }
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByHeight (people) {
     let userInput = prompt ("Please enter height in inches.");
     let foundPerson = people.filter(function(person) {
-        if (person.height.includes(userInput)) {
+        if (person.height === (userInput)) {
             return true;
         }
     });
     return foundPerson;
 }
-
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByWeight (people) {
     let userInput = prompt ("Please enter weight in pounds.");
     let foundPerson = people.filter(function(person) {
-        if (person.weight.includes(userInput)) {
+        if (person.weight === (userInput)) {
             return true;
         }
     });
     return foundPerson;
 }
-
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByEyeColor (people) {
     let userInput = prompt ("Please enter eye color.");
     let foundPerson = people.filter(function(person) {
-        if (person.eyeColor.includes(userInput)) {
+        if (person.eyeColor === (userInput)) {
             return true;
         }
     });
     return foundPerson;
 }
-
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 function searchByOccupation (people) {
     let userInput = prompt ("Please enter occupation.");
     let foundPerson = people.filter(function(person) {
-        if (person.occupation.includes(userInput)) {
+        if (person.occupation === (userInput)) {
             return true;
         }
-    });
+    });    
     return foundPerson;
 }
+ 
+function findPersonFamily (person, arrayParent = ["none found"]) {
+    let subArray = person.parents;
+    if (subArray.length === 0) {
+        return arrayParent;
+    }
+    for (let i = 0; i < subArray.length; i++) {
+        arrayParent = arrayParent.concat (
+            findPersonFamily (person, subArray [i])
+        );
+    }
+    return arrayParent;
+} 
