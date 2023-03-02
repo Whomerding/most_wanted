@@ -230,12 +230,33 @@ function searchByTraits (people) {
                 displayPeople(foundPerson);
                 break;
             }
-        case "many":
+        case "many":   
             let searchRequestMany = prompt ("Please enter up to five search parameters:\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
-           
-            
+            let foundPerson = people;
+            if (searchRequestMany.includes ("gender")) {
+                foundPerson = searchByGender (foundPerson);
+            }
+            if (searchRequestMany.includes ("Date of Birth")) {
+                foundPerson = searchByDOB (foundPerson);
+            }
+            if (searchRequestMany.includes ("height")) {
+                foundPerson = searchByHeight (foundPerson);
+            }    
+            if (searchRequestMany.includes ("weight")) {
+                foundPerson = searchByWeight (foundPerson);
+            }    
+            if (searchRequestMany.includes ("eye color")) {
+                foundPerson = searchByEyeColor (foundPerson);
+            }
+            if (searchRequestMany.includes ("occupation")) {
+                foundPerson = searchByOccupation (foundPerson);
+            }
+         
+        displayPeople(foundPerson)   
         }
+
     }
+
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
  * example: searchByGender will retrieve all male or female persons in the people array. 
