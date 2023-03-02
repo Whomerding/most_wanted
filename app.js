@@ -376,17 +376,55 @@ function findSiblings (person, people) {
 return foundPerson;
 }
 
-function findPersonDescendants(person, array = ["none found"]) {
-    let subArray = person.parents;
-    if (subArray.length === 0) {
-        return array;
-    }
-    for (let i = 0; i < subArray.length; i++) {
-        array = array.concat(
-            findPersonDescendants(subArray[i])
-        );
-    }
-    alert (displayPeople(array));
+
+function findPersonDescendants (person, people) {
+    let descendants = [];
+    let foundKids = findKids(person, people);
+    let foundGrandKids = findGrandKids (foundKids, people);
+    descendants = foundKids.concat(foundGrandKids);
+    displayPeople(descendants);
 
 }
 
+function findKids (person,people) {
+    let foundPerson = people.filter(function(el) {
+    if (el.parents.includes(person.id)) {
+        return true;
+        }
+    });
+    return foundPerson;
+    }    
+
+function findGrandKids (array = ["none found"], people) {
+    for (let i =0; i < array.length;i+1){
+        let kid = array[i];
+        let foundPerson = people.filter(function(el) {
+            if (el.parents.includes(kid.id)) {
+                return true;
+            
+            }
+        });
+        return foundPerson;
+        }
+}
+
+    /** 
+function findPersonDescendants (person, people) {
+    let subArray = people;
+    let foundDescendants=[];
+   if (subArray.length === 0) {
+        return foundDescendants;
+   }
+   for (let i = 0; i < subArray.length; i++) {
+    foundDescendants = 
+    people.filter(function(el) {
+        if (el.parents.includes(person.id)) {
+            return true;
+        };
+        foundDescendants = foundDescendants.concat(
+        findPersonDescendants(subArray[i])
+    );
+   });
+   return foundDescendants;
+}
+*/
