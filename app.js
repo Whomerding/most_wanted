@@ -249,47 +249,48 @@ function searchByTraits (people) {
                 displayPeople(foundPeople);
                 break;
             }
-        case "many":  
+            case "many":  
             let searchRequestMany = prompt ("Please enter up to five search parameters:\n'first name'\n'last name'\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
-            let foundPeople = people;
-            if (searchRequestMany.includes ("first name")) {
+            searchRequestMany = validatorMany(searchRequestMany)
+        let foundPeople = people;
+        if (searchRequestMany.includes ("first name")) {
                 foundPeople = searchByFirstName (foundPeople);
             }
             if (searchRequestMany.includes ("last name")) {
-                foundPeople = searchByLastName (foundPeople);
-            }
-            if (searchRequestMany.includes ("gender")) {
-                foundPeople = searchByGender (foundPeople);
-            }
-            if (searchRequestMany.includes ("Date of Birth")) {
-                foundPeople = searchByDOB (foundPeople);
-            }
-            if (searchRequestMany.includes ("height")) {
-                foundPeople = searchByHeight (foundPeople);
-            }    
-            if (searchRequestMany.includes ("weight")) {
-                foundPeople = searchByWeight (foundPeople);
-            }    
-            if (searchRequestMany.includes ("eye color")) {
-                foundPeople = searchByEyeColor (foundPeople);
-            }
-            if (searchRequestMany.includes ("occupation")) {
-                foundPeople = searchByOccupation (foundPeople);
-            }
-         
-        displayPeople(foundPeople)   
-        }
-        // function recursiveSearchByTraits (people) {
-        //     let userInputProperty=prompt("Please enter up to five search parameters:\n'gender'\n'dob'\n'height'\n'weight'\n'eyeColor'\n'occupation'");
-        //     let userInputValue=prompt("Please enter the value to search for:");
-        //     let resultsArray = people.filter( el => el[userInputProperty] == userInputValue );
-        //     if(resultsArray.length === 1) return resultsArray;
-        //     if(resultsArray.length === 0) return recursiveSearchByTraits(people);
-        //     if(resultsArray.length > 1) return recursiveSearchByTraits(resultsArray)
-        // }
-
-    }
-    
+                    foundPeople = searchByLastName (foundPeople);
+                }
+                if (searchRequestMany.includes ("gender")) {
+                        foundPeople = searchByGender (foundPeople);
+                    }
+                    if (searchRequestMany.includes ("Date of Birth")) {
+                            foundPeople = searchByDOB (foundPeople);
+                        }
+                        if (searchRequestMany.includes ("height")) {
+                                foundPeople = searchByHeight (foundPeople);
+                            }    
+                            if (searchRequestMany.includes ("weight")) {
+                                    foundPeople = searchByWeight (foundPeople);
+                                }    
+                                if (searchRequestMany.includes ("eye color")) {
+                                        foundPeople = searchByEyeColor (foundPeople);
+                                    }
+                                    if (searchRequestMany.includes ("occupation")) {
+                                            foundPeople = searchByOccupation (foundPeople);
+                                        }
+                                        
+                                        displayPeople(foundPeople)   
+                                    }
+                                    
+                                }
+                                
+// function recursiveSearchByTraits (people) {
+//     let userInputProperty=prompt("Please enter up to five search parameters:\n'gender'\n'dob'\n'height'\n'weight'\n'eyeColor'\n'occupation'");
+//     let userInputValue=prompt("Please enter the value to search for:");
+//     let resultsArray = people.filter( el => el[userInputProperty] == userInputValue );
+//     if(resultsArray.length === 1) return resultsArray;
+//     if(resultsArray.length === 0) return recursiveSearchByTraits(people);
+//     if(resultsArray.length > 1) return recursiveSearchByTraits(resultsArray)
+// }
 
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -507,7 +508,7 @@ function validator(validInput) {
         return validInput;
     }
     else {
-        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen.\nfirst name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen.\nfirst name\nlast name\ngender\nDate of Birth\nheight\nweight\neye color\noccupation")
         return validInput;
     }
 } while (invalidResponse === true);
@@ -534,6 +535,19 @@ function validatorOneMany(validInput) {
     }
     else {
         let validInput = prompt("That is not a valid input please type inputs exactly as they appear.\n 'one'\n 'many'")
+        return validInput;
+    }
+} while (invalidResponse === true);
+
+}
+function validatorMany(validInput) {
+    let invalidResponse = true;
+    do{ if (validInput.includes("first name")||validInput.includes("last name")||validInput.includes("gender")||validInput.includes("Date of Birth")||validInput.includes("height")||validInput.includes("weight")||validInput.includes("eye color")||validInput.includes("occupation")) {
+        invalidResponse = false;
+        return validInput;
+    }
+    else {
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen with one space in between words.\nfirst name\nlast name\ngender\nDate of Birth\nheight\nweight\neye color\noccupation")
         return validInput;
     }
 } while (invalidResponse === true);
