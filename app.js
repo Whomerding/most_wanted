@@ -61,6 +61,7 @@ function mainMenu(person, people) {
     let displayOption = prompt(
         `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
+    displayOption = validatorMainMenu(displayOption)
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
@@ -78,7 +79,7 @@ function mainMenu(person, people) {
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person, people);
+            let personDescendants = findPersonDescendants(person[0], people);
             alert(personDescendants);
             break;
         case "restart":
@@ -203,6 +204,7 @@ function chars(input) {
  */
 function searchByTraits (people) {
     let displayOption = prompt("Would you like to search by 'one' or 'many' traits?")
+    displayOption = validatorOneMany(displayOption)
     switch(displayOption) {
         case "one":
             let userInput = prompt("What trait would you like to search by?\n'first name'\n'last name'\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
@@ -248,8 +250,14 @@ function searchByTraits (people) {
                 break;
             }
         case "many":  
-            let searchRequestMany = prompt ("Please enter up to five search parameters:\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
+            let searchRequestMany = prompt ("Please enter up to five search parameters:\n'first name'\n'last name'\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
             let foundPeople = people;
+            if (searchRequestMany.includes ("first name")) {
+                foundPeople = searchByFirstName (foundPeople);
+            }
+            if (searchRequestMany.includes ("last name")) {
+                foundPeople = searchByLastName (foundPeople);
+            }
             if (searchRequestMany.includes ("gender")) {
                 foundPeople = searchByGender (foundPeople);
             }
@@ -337,7 +345,7 @@ function searchByFirstName (people) {
 function searchByDOB (people) {
     let userInput = prompt ("Please enter the Date of Birth in month/day/year format.");
     let foundPeople = people.filter(function(person) {
-        if (person.dob === (userInput)) {
+        if (person.dob == (userInput)) {
             return true;
         }
     });
@@ -352,7 +360,7 @@ function searchByDOB (people) {
 function searchByHeight (people) {
     let userInput = prompt ("Please enter height in inches.");
     let foundPeople = people.filter(function(person) {
-        if (person.height === (userInput)) {
+        if (person.height == (userInput)) {
             return true;
         }
     });
@@ -367,7 +375,7 @@ function searchByHeight (people) {
 function searchByWeight (people) {
     let userInput = prompt ("Please enter weight in pounds.");
     let foundPeople = people.filter(function(person) {
-        if (person.weight === (userInput)) {
+        if (person.weight == (userInput)) {
             return true;
         }
     });
@@ -488,22 +496,46 @@ function recursiveFindDescendants (person, people) {
     for (let i = 0; i < descendants.length; i++) {
         descendants = descendants.concat(recursiveFindDescendants(descendants[i], people));    
     }
-    return displayDescendants;
+    return descendants;
 }
 
 
 function validator(validInput) {
     let invalidResponse = true;
-    do{if (validInput.toLowerCase() === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
+    do{if (validInput === "first name"||validInput==="last name"||validInput==="gender"||validInput==="Date of Birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
         invalidResponse = false;
         return validInput;
     }
     else {
-        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen. first name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen.\nfirst name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
         return validInput;
     }
 } while (invalidResponse === true);
 
 }
+function validatorMainMenu(validInput) {
+    let invalidResponse = true;
+    do{if (validInput === "family"||validInput==="info"||validInput==="restart"||validInput==="quit"){
+        invalidResponse = false;
+        return validInput;
+    }
+    else {
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen.\ninfo\nfamily\nrestart\nquit")
+        return validInput;
+    }
+} while (invalidResponse === true);
 
+}
+function validatorOneMany(validInput) {
+    let invalidResponse = true;
+    do{if (validInput === "one"||validInput==="many"){
+        invalidResponse = false;
+        return validInput;
+    }
+    else {
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear.\n 'one'\n 'many'")
+        return validInput;
+    }
+} while (invalidResponse === true);
 
+}
