@@ -423,21 +423,25 @@ return foundPeople;
 }
 
 function findPersonDescendants(person, people){
+    for (let i = 0; i<people.length; i++) {
     let foundPeople = people.filter(function(el){
-        if (el.parents.includes(person.id)) {
-            return true;
+        if (el.parents.includes(person.id)){
+            findPersonDescendants(people[i],people);
+            return foundPeople;
         }
     });
-    return foundPeople
+    return foundPeople;
 }
-
-function validator (validInput) {   
-        if (validInput === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
-            return validInput;
-        }
-        else {
-            let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen. first name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
-            validator(validInput)
-        }
+}
+function validator(validInput) {
+    let invalidResponse = true;
+    do{if (validInput === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
+        invalidResponse = false;
         return validInput;
+    }
+    else {
+        let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen. first name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
+        return validInput;
+    }
+} while (invalidResponse = true);
 }
