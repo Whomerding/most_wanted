@@ -78,7 +78,7 @@ function mainMenu(person, people) {
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
+            let personDescendants = findPersonDescendants(person, people);
             alert(personDescendants);
             break;
         case "restart":
@@ -194,68 +194,74 @@ function chars(input) {
 
 
 // Search by different parameter functions
-
+/**
+ * We pass in the entire original dataset of people and filter by object attributes.  Can search by one attribute or many attributes. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of person objects matching search criteria.
+ */
 function searchByTraits (people) {
     let displayOption = prompt("Would you like to search by 'one' or 'many' traits?")
     switch(displayOption) {
         case "one":
             let userInput = prompt("What trait would you like to search by?\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
+            userInput = validator(userInput)
             if (userInput === "gender") {
-                let foundPerson = searchByGender(people)
-                displayPeople (foundPerson);
+                let foundPeople = searchByGender(people)
+                displayPeople (foundPeople);
                 break;
             }
             if (userInput === "Date of Birth") {
-                let foundPerson = searchByDOB(people)
-                displayPeople(foundPerson);
+                let foundPeople = searchByDOB(people)
+                displayPeople(foundPeople);
                 break;
             }
             if (userInput === "height") {
-                let foundPerson = searchByHeight(people)
-                displayPeople(foundPerson);
+                let foundPeople = searchByHeight(people)
+                displayPeople(foundPeople);
                 break;
             }
             if (userInput === "weight") {
-                let foundPerson = searchByWeight(people)
-                displayPeople(foundPerson);
+                let foundPeople = searchByWeight(people)
+                displayPeople(foundPeople);
                 break;
             }
             if (userInput === "eye color") {
-                let foundPerson = searchByEyeColor(people)
-                displayPeople(foundPerson);
+                let foundPeople = searchByEyeColor(people)
+                displayPeople(foundPeople);
                 break;
             }
             if (userInput === "occupation") {
-                let foundPerson = searchByOccupation(people)
-                displayPeople(foundPerson);
+                let foundPeople = searchByOccupation(people)
+                displayPeople(foundPeople);
                 break;
             }
-        case "many":   
+        case "many":  
             let searchRequestMany = prompt ("Please enter up to five search parameters:\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'");
-            let foundPerson = people;
+            let foundPeople = people;
             if (searchRequestMany.includes ("gender")) {
-                foundPerson = searchByGender (foundPerson);
+                foundPeople = searchByGender (foundPeople);
             }
             if (searchRequestMany.includes ("Date of Birth")) {
-                foundPerson = searchByDOB (foundPerson);
+                foundPeople = searchByDOB (foundPeople);
             }
             if (searchRequestMany.includes ("height")) {
-                foundPerson = searchByHeight (foundPerson);
+                foundPeople = searchByHeight (foundPeople);
             }    
             if (searchRequestMany.includes ("weight")) {
-                foundPerson = searchByWeight (foundPerson);
+                foundPeople = searchByWeight (foundPeople);
             }    
             if (searchRequestMany.includes ("eye color")) {
-                foundPerson = searchByEyeColor (foundPerson);
+                foundPeople = searchByEyeColor (foundPeople);
             }
             if (searchRequestMany.includes ("occupation")) {
-                foundPerson = searchByOccupation (foundPerson);
+                foundPeople = searchByOccupation (foundPeople);
             }
          
-        displayPeople(foundPerson)   
+        displayPeople(foundPeople)   
         }
 
     }
+    
 
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -265,12 +271,12 @@ function searchByTraits (people) {
  */
 function searchByGender (people) {
     let userInput = prompt ("Please enter 'male' or 'female'.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.gender === (userInput)) {
             return true;
         }
     });
-    return foundPerson;
+    return foundPeople;
 }
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -280,12 +286,12 @@ function searchByGender (people) {
  */
 function searchByDOB (people) {
     let userInput = prompt ("Please enter the Date of Birth in month/day/year format.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.dob === (userInput)) {
             return true;
         }
     });
-    return foundPerson;
+    return foundPeople;
 }
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -295,12 +301,12 @@ function searchByDOB (people) {
  */
 function searchByHeight (people) {
     let userInput = prompt ("Please enter height in inches.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.height === (userInput)) {
             return true;
         }
     });
-    return foundPerson;
+    return foundPeople;
 }
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -310,12 +316,12 @@ function searchByHeight (people) {
  */
 function searchByWeight (people) {
     let userInput = prompt ("Please enter weight in pounds.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.weight === (userInput)) {
             return true;
         }
     });
-    return foundPerson;
+    return foundPeople;
 }
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -325,12 +331,12 @@ function searchByWeight (people) {
  */
 function searchByEyeColor (people) {
     let userInput = prompt ("Please enter eye color.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.eyeColor === (userInput)) {
             return true;
         }
     });
-    return foundPerson;
+    return foundPeople;
 }
 /**
  * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
@@ -340,15 +346,19 @@ function searchByEyeColor (people) {
  */
 function searchByOccupation (people) {
     let userInput = prompt ("Please enter occupation.");
-    let foundPerson = people.filter(function(person) {
+    let foundPeople = people.filter(function(person) {
         if (person.occupation === (userInput)) {
             return true;
         }
     });    
-    return foundPerson;
+    return foundPeople;
 }
  
-
+/**
+ * Functions that takes in an object and return an array of objects matching criteria. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
 
 
 function findPersonFamily (person, people) {
@@ -362,90 +372,72 @@ function findPersonFamily (person, people) {
     });
     let siblings = findSiblings(person, people)
     let siblingDisplay= siblings.map((el)=>{
-        return `Sibling(s): ${el.firstName} ${el.lastName}`;
+        return `Sibling: ${el.firstName} ${el.lastName}`;
     });
     let familyDisplay = [];
     familyDisplay = familyDisplay.concat([parentDisplay, spouseDisplay, siblingDisplay]);
 
-    alert(familyDisplay);
+    return familyDisplay;
 }   
-    
+  /**
+ * Helper Function to findPersonFamily function.     
+ * @param {Object[]} person     A single person object from the people array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */  
 function findParents (person, people) {
-    let foundPerson = people.filter(function(el) {
+    let foundPeople = people.filter(function(el) {
     if (person.parents.includes(el.id)) {
         return true;
     }
 });
-return foundPerson;
+return foundPeople;
 }
-
+  /**
+ * Helper Function to findPersonFamily function.     
+ * @param {Object[]} person     A single person object from the people array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */ 
 function findSpouse (person, people) {
-    let foundPerson = people.filter(function(el) {
+    let foundPeople = people.filter(function(el) {
     if (person.currentSpouse === (el.id)) {
         return true;
     }
 });
-return foundPerson;
+return foundPeople;
 }
-
+  /**
+ * Helper Function to findPersonFamily function.     
+ * @param {Object[]} person     A single person object from the people array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */ 
 function findSiblings (person, people) {
-    let foundPerson = people.filter(function(el) {
-    if (person.parents.includes(el.parents) && person.id != el.id) {
+    let foundPeople = people.filter(function(el) {
+    if (person.parents.toString() === el.parents.toString() && person.id != el.id) {
         return true;
     }
 });
-return foundPerson;
+return foundPeople;
 }
 
-
-function findPersonDescendants (person, people) {
-    let descendants = [];
-    let foundKids = findKids(person, people);
-    let foundGrandKids = findGrandKids (foundKids, people);
-    descendants = foundKids.concat(foundGrandKids);
-    displayPeople(descendants);
-
-}
-
-function findKids (person,people) {
-    let foundPerson = people.filter(function(el) {
-    if (el.parents.includes(person.id)) {
-        return true;
-        }
-    });
-    return foundPerson;
-    }    
-
-function findGrandKids (array = ["none found"], people) {
-    for (let i =0; i < array.length;i+1){
-        let kid = array[i];
-        let foundPerson = people.filter(function(el) {
-            if (el.parents.includes(kid.id)) {
-                return true;
-            
-            }
-        });
-        return foundPerson;
-        }
-}
-
-    /** 
-function findPersonDescendants (person, people) {
-    let subArray = people;
-    let foundDescendants=[];
-   if (subArray.length === 0) {
-        return foundDescendants;
-   }
-   for (let i = 0; i < subArray.length; i++) {
-    foundDescendants = 
-    people.filter(function(el) {
+function findPersonDescendants(person, people){
+    let foundPeople = people.filter(function(el){
         if (el.parents.includes(person.id)) {
             return true;
-        };
-        foundDescendants = foundDescendants.concat(
-        findPersonDescendants(subArray[i])
-    );
-   });
-   return foundDescendants;
+        }
+    });
+    return foundPeople
 }
-*/
+
+function validator (validInput) {   
+        if (validInput === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
+            return validInput;
+        }
+        else {
+            let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen. first name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
+            validator(validInput)
+        }
+        return validInput;
+}
