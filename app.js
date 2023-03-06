@@ -88,6 +88,8 @@ function mainMenu(person, people) {
         case "quit":
             // Stop application execution
             return;
+        case "test":
+            console.log(recursiveFindDescendants(person, people));
         default:
             // Prompt user again. Another instance of recursion
             return mainMenu(person, people);
@@ -203,8 +205,18 @@ function searchByTraits (people) {
     let displayOption = prompt("Would you like to search by 'one' or 'many' traits?")
     switch(displayOption) {
         case "one":
-            let userInput = prompt("What trait would you like to search by?\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
+            let userInput = prompt("What trait would you like to search by?\n'first name'\n'last name'\n'gender'\n'Date of Birth'\n'height'\n'weight'\n'eye color'\n'occupation'")
             userInput = validator(userInput)
+            if (userInput === "last name") {
+                let foundPeople = searchByLastName(people)
+                displayPeople (foundPeople);
+                break;
+            }
+            if (userInput === "first name") {
+                let foundPeople = searchByFirstName(people)
+                displayPeople (foundPeople);
+                break;
+            }
             if (userInput === "gender") {
                 let foundPeople = searchByGender(people)
                 displayPeople (foundPeople);
@@ -259,6 +271,14 @@ function searchByTraits (people) {
          
         displayPeople(foundPeople)   
         }
+        // function recursiveSearchByTraits (people) {
+        //     let userInputProperty=prompt("Please enter up to five search parameters:\n'gender'\n'dob'\n'height'\n'weight'\n'eyeColor'\n'occupation'");
+        //     let userInputValue=prompt("Please enter the value to search for:");
+        //     let resultsArray = people.filter( el => el[userInputProperty] == userInputValue );
+        //     if(resultsArray.length === 1) return resultsArray;
+        //     if(resultsArray.length === 0) return recursiveSearchByTraits(people);
+        //     if(resultsArray.length > 1) return recursiveSearchByTraits(resultsArray)
+        // }
 
     }
     
@@ -273,6 +293,36 @@ function searchByGender (people) {
     let userInput = prompt ("Please enter 'male' or 'female'.");
     let foundPeople = people.filter(function(person) {
         if (person.gender === (userInput)) {
+            return true;
+        }
+    });
+    return foundPeople;
+}
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
+function searchByLastName (people) {
+    let userInput = prompt ("Please enter the Last Name:");
+    let foundPeople = people.filter(function(person) {
+        if (person.lastName === (userInput)) {
+            return true;
+        }
+    });
+    return foundPeople;
+}
+/**
+ * all searchBy functions take in an array of objects and return an array of objects matching the searchBy criteria.
+ * example: searchByGender will retrieve all male or female persons in the people array. 
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}            Returns an array of people matching search criteria
+ */
+function searchByFirstName (people) {
+    let userInput = prompt ("Please enter the First Name");
+    let foundPeople = people.filter(function(person) {
+        if (person.firstName === (userInput)) {
             return true;
         }
     });
@@ -422,20 +472,29 @@ function findSiblings (person, people) {
 return foundPeople;
 }
 
+
 function findPersonDescendants(person, people){
-    for (let i = 0; i<people.length; i++) {
-    let foundPeople = people.filter(function(el){
-        if (el.parents.includes(person.id)){
-            findPersonDescendants(people[i],people);
-            return foundPeople;
-        }
-    });
-    return foundPeople;
+    let foundPersonDescendants = recursiveFindDescendants(person, people);
+    displayPeople(foundPersonDescendants);
 }
+function recursiveFindDescendants (person, people) {
+    // Notes by Pascal
+    // Base case -- find people objects who have my person's id in their parents array
+    let descendants = people.filter(el => el.parents.includes(person.id));
+    // If my array of descendants is empty, return empty array back to be concat'd with previous recursive call
+    if (people.length === 0) return descendants;
+    // If above check fails (meaning we have at least 1 descendant), then we iterate through each descendant
+    // and pass them along with people data set (so that we can continue to compare across ALL people)
+    for (let i = 0; i < descendants.length; i++) {
+        descendants = descendants.concat(recursiveFindDescendants(descendants[i], people));    
+    }
+    return displayDescendants;
 }
+
+
 function validator(validInput) {
     let invalidResponse = true;
-    do{if (validInput === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
+    do{if (validInput.toLowerCase() === "first name"||validInput==="last name"||validInput==="gender"||validInput==="date of birth"||validInput==="height"||validInput==="weight"||validInput==="eye color"||validInput==="occupation") {
         invalidResponse = false;
         return validInput;
     }
@@ -443,5 +502,8 @@ function validator(validInput) {
         let validInput = prompt("That is not a valid input please type inputs exactly as they appear on the screen. first name\nlast name\ngender\ndate of birth\nheight\nweight\neye color\noccupation")
         return validInput;
     }
-} while (invalidResponse = true);
+} while (invalidResponse === true);
+
 }
+
+
